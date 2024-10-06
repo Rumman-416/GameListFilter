@@ -20,6 +20,7 @@ Clone the repository
 ```
 Frontend
 ```bash
+  cd GameListFilter
   npm install
   npm run dev
 ```

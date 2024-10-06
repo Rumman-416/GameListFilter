@@ -25,7 +25,6 @@ const GamesList = () => {
   const orderBy = searchParams.get("orderBy") || "rating";
   const orderDirection = searchParams.get("orderDirection") || "desc";
 
-
   const handleOrderDirectionChange = () => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
@@ -37,14 +36,16 @@ const GamesList = () => {
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
       orderBy: value,
-      orderDirection: value === "firstReleaseDate" || value === "rating" ? "desc" : "asc",
+      orderDirection:
+        value === "firstReleaseDate" || value === "rating" ? "desc" : "asc",
     });
   };
 
   const handleFilterChange = (field, value) => {
+    const newValue = value === "" ? undefined : value;
     setSearchParams({
       ...Object.fromEntries(searchParams.entries()),
-      [field]: value,
+      [field]: newValue,
     });
   };
 
@@ -111,7 +112,9 @@ const GamesList = () => {
                   type="number"
                   placeholder="1"
                   value={minRatings}
-                  onChange={(e) => handleFilterChange("minRatings", e.target.value)}
+                  onChange={(e) =>
+                    handleFilterChange("minRatings", e.target.value)
+                  }
                   className="bg-input p-1 focus:outline-none w-10"
                 />{" "}
                 _{"   "}
@@ -119,7 +122,9 @@ const GamesList = () => {
                   type="number"
                   placeholder="10"
                   value={maxRatings}
-                  onChange={(e) => handleFilterChange("maxRatings", e.target.value)}
+                  onChange={(e) =>
+                    handleFilterChange("maxRatings", e.target.value)
+                  }
                   className="bg-input p-1 focus:outline-none w-20 md:w-full"
                 />
               </div>
@@ -132,7 +137,9 @@ const GamesList = () => {
                   onClick={handleOrderDirectionChange}
                 >
                   <FaArrowUp
-                    className={`text-lg ${orderDirection === "asc" ? "rotate-180" : ""}`}
+                    className={`text-lg ${
+                      orderDirection === "asc" ? "rotate-180" : ""
+                    }`}
                   />
                 </div>
                 <select
@@ -149,7 +156,7 @@ const GamesList = () => {
             <div className="mt-4 md:mt-5">
               <button
                 className="bg-button w-full p-1 md:px-3 md:py-[3px] rounded-sm"
-                onClick={() => setSearchParams({})} 
+                onClick={() => setSearchParams({})}
               >
                 clear
               </button>
@@ -178,7 +185,9 @@ const GamesList = () => {
                     </p>
                     <p className="text-[10px] mb-4">
                       Release Date:{" "}
-                      {moment(item.attributes.firstReleaseDate).format("DD-MM-YYYY")}
+                      {moment(item.attributes.firstReleaseDate).format(
+                        "DD-MM-YYYY"
+                      )}
                     </p>
                     <p className="font-mulish text-[10px]">
                       {item.attributes.summary
@@ -202,7 +211,12 @@ const GamesList = () => {
       <div className="flex justify-end gap-5 items-center pr-5 pb-4 mt-4 lg:mt-0">
         <button
           className="bg-button p-1"
-          onClick={() => setSearchParams({ ...Object.fromEntries(searchParams.entries()), page: page - 1 })}
+          onClick={() =>
+            setSearchParams({
+              ...Object.fromEntries(searchParams.entries()),
+              page: page - 1,
+            })
+          }
           disabled={page === 1}
         >
           <MdOutlineKeyboardArrowLeft className="text-2xl" />
@@ -210,7 +224,12 @@ const GamesList = () => {
         <span>{page}</span>
         <button
           className="bg-button p-1"
-          onClick={() => setSearchParams({ ...Object.fromEntries(searchParams.entries()), page: page + 1 })}
+          onClick={() =>
+            setSearchParams({
+              ...Object.fromEntries(searchParams.entries()),
+              page: page + 1,
+            })
+          }
         >
           <MdOutlineKeyboardArrowRight className="text-2xl" />
         </button>
